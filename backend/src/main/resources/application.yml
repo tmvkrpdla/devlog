@@ -1,0 +1,20 @@
+server:
+  address: 127.0.0.1
+  port: ${SERVER_PORT:8080}
+spring:
+  application:
+    name: devlog
+  datasource:
+    url: ${DB_URL:jdbc:mariadb://127.0.0.1:3307/devlog}
+    username: ${DB_USERNAME:devlog}
+    password: ${DB_PASSWORD:devlog_local}
+    driver-class-name: org.mariadb.jdbc.Driver
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    default-statement-timeout: 10

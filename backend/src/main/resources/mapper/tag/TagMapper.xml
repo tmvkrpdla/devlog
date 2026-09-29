@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hoseong.devlog.tag.TagMapper">
+  <select id="findAll" resultType="com.hoseong.devlog.tag.Tag">SELECT id,name FROM tag ORDER BY name</select>
+  <select id="findForIssues" resultType="com.hoseong.devlog.tag.Tag">
+    SELECT g.id,g.name,tt.troubleshooting_id FROM tag g JOIN troubleshooting_tag tt ON tt.tag_id=g.id
+    WHERE tt.troubleshooting_id IN
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    ORDER BY g.name
+  </select>
+  <insert id="upsert">INSERT INTO tag(name) VALUES(#{name}) ON DUPLICATE KEY UPDATE name=name</insert>
+  <select id="findId" resultType="long">SELECT id FROM tag WHERE name=#{name}</select>
+  <insert id="link">INSERT INTO troubleshooting_tag(troubleshooting_id,tag_id) VALUES(#{issueId},#{tagId})</insert>
+  <delete id="unlink">DELETE FROM troubleshooting_tag WHERE troubleshooting_id=#{issueId}</delete>
+</mapper>

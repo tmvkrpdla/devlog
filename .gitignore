@@ -1,0 +1,12 @@
+.gradle/
+build/
+node_modules/
+dist/
+.idea/
+*.iml
+.env
+*.log
+.local/
+
+# Machine-specific Gradle JDK path
+backend/gradle.properties
